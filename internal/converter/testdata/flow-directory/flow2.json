@@ -1,0 +1,80 @@
+{
+  "companyId": "5e489d7b-cc42-425f-942c-a0d00f47058d",
+  "authTokenExpireIds": [],
+  "connectorIds": [
+    "httpConnector"
+  ],
+  "createdDate": 1679514239447,
+  "currentVersion": 0,
+  "customerId": "ee728871d18a3b9b273c87192cee4a18",
+  "deployedDate": 1679514241504,
+  "description": "Second test flow",
+  "flowStatus": "enabled",
+  "name": "simple-flow-two",
+  "publishedVersion": 0,
+  "settings": {
+    "csp": "worker-src 'self' blob:;",
+    "intermediateLoadingScreenCSS": "",
+    "intermediateLoadingScreenHTML": "",
+    "flowHttpTimeoutInSeconds": 300
+  },
+  "updatedDate": 1679514241504,
+  "flowId": "b5b2e9f4fa637b8950ef6306022b989f",
+  "versionId": 0,
+  "graphData": {
+    "elements": {
+      "nodes": [
+        {
+          "data": {
+            "id": "node2",
+            "nodeType": "CONNECTION",
+            "connectionId": "867ed4363b2bc21c860085ad2baa817d",
+            "connectorId": "httpConnector",
+            "name": "Http",
+            "label": "Http",
+            "status": "configured",
+            "capabilityName": "customHtmlMessage",
+            "type": "trigger",
+            "properties": {
+              "message": {
+                "value": "[\n  {\n    \"children\": [\n      {\n        \"text\": \"Hello World 2\"\n      }\n    ]\n  }\n]"
+              }
+            }
+          },
+          "position": {
+            "x": 400,
+            "y": 400
+          },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
+        }
+      ]
+    },
+    "data": {},
+    "zoomingEnabled": true,
+    "userZoomingEnabled": true,
+    "zoom": 1,
+    "minZoom": 1e-50,
+    "maxZoom": 1e+50,
+    "panningEnabled": true,
+    "userPanningEnabled": true,
+    "pan": {
+      "x": 0,
+      "y": 0
+    },
+    "boxSelectionEnabled": true,
+    "renderer": {
+      "name": "null"
+    }
+  },
+  "flowColor": "#AFD5FF",
+  "savedDate": 1679514239427,
+  "variables": [],
+  "connections": []
+}
