@@ -233,7 +233,7 @@ func generateProviderConfig(region string) string {
 	hcl.WriteString("  required_providers {\n")
 	hcl.WriteString("    pingone = {\n")
 	hcl.WriteString("      source  = \"pingidentity/pingone\"\n")
-	hcl.WriteString("      version = \">= 1.0.0\"\n")
+	hcl.WriteString("      version = \"1.16.0-beta\"\n")
 	hcl.WriteString("    }\n")
 	hcl.WriteString("  }\n")
 	hcl.WriteString("}\n")

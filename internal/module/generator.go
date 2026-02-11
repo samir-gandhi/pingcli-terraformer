@@ -99,12 +99,12 @@ func (g *Generator) writeFile(dir, filename, content string) error {
 // generateVersionsTF creates the versions.tf file in the child module
 func (g *Generator) generateVersionsTF() error {
 	content := `terraform {
-  required_version = ">= 1.3"
+  required_version = ">= 1.5"
 
   required_providers {
     pingone = {
       source  = "pingidentity/pingone"
-      version = ">= 1.0.0"
+      version = "1.16.0-beta"
     }
   }
 }
