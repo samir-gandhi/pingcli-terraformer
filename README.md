@@ -39,7 +39,7 @@ Set these environment variables to avoid passing credentials via command-line fl
 # Worker environment (for authentication)
 export PINGCLI_PINGONE_ENVIRONMENT_ID="abc-123-def-456..."
 export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID="your-client-id"
-export PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET="your-client-secret"
+export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET="your-client-secret"
 
 # Export environment (target resources, defaults to worker environment if not set)
 export PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID="target-env-id"
@@ -106,36 +106,6 @@ pingcli-terraformer export
 # 2 directories, 11 files
 ```
 
-### Include Actual Values
-
-Generate module with actual values from the API (for environment management):
-
-```bash
-pingcli-terraformer export \
-  --include-values \
-  --out ./envs/production
-```
-
-### Skip Import Blocks
-
-For Terraform versions < 1.5 or manual import workflows:
-
-```bash
-pingcli-terraformer export \
-  --skip-imports \
-  --out environment.tf
-```
-
-### Skip Dependencies
-
-Use hardcoded UUIDs instead of Terraform references (for testing):
-
-```bash
-pingcli-terraformer export \
-  --skip-dependencies \
-  --out standalone.tf
-```
-
 ## Command Reference
 
 ### Export Command
@@ -154,7 +124,7 @@ pingcli-terraformer export [flags]
 | `--pingone-worker-client-id` | - | OAuth2 client ID |
 | `--pingone-worker-client-secret` | - | OAuth2 client secret |
 | `--pingone-region-code` | `NA` | Region: NA, EU, AP, CA, AU |
-| `--out` | stdout | Output file path |
+| `--out` | stdout | Output directory path |
 | `--module-name` | `ping-export` | Terraform module name prefix |
 | `--module-dir` | `ping-export-module` | Child module directory name |
 | `--include-values` | false | Populate variable values from API |
@@ -162,142 +132,16 @@ pingcli-terraformer export [flags]
 | `--skip-imports` | false | Skip generating import blocks |
 | `--skip-dependencies` | false | Use hardcoded UUIDs instead of references |
 
-## Output Examples
-
-### Generated Module Structure
-
-**module.tf (root module):**
-```hcl
-module "ping-export" {
-  source = "./ping-export-module"
-
-  pingone_environment_id = ""  # TODO: Provide environment ID
-  
-  # Variables with empty defaults (customize per environment)
-  davinci_variable_companyName_value = ""
-  davinci_connection_http_base_url = ""
-}
-```
-
-**imports.tf:**
-```hcl
-import {
-  to = module.ping-export.pingone_davinci_variable.companyName
-  id = "env-id/var-id"
-}
-
-import {
-  to = module.ping-export.pingone_davinci_flow.registrationFlow
-  id = "env-id/flow-id"
-}
-```
-
-**ping-export-module/variables.tf:**
-```hcl
-variable "pingone_environment_id" {
-  type        = string
-  description = "PingOne environment ID"
-}
-
-variable "davinci_variable_companyName_value" {
-  type        = string
-  description = "Value for DaVinci variable: companyName"
-  default     = ""
-}
-```
-
-**ping-export-module/flows.tf:**
-```hcl
-resource "pingone_davinci_flow" "registrationFlow" {
-  environment_id = var.pingone_environment_id
-  name          = "registrationFlow"
-  description   = "User registration flow"
-  
-  connection_link {
-    id   = pingone_davinci_connector_instance.httpConnector.id
-    name = "HTTP Connector"
-  }
-  
-  graph_data = jsonencode({
-    # ... flow configuration
-  })
-}
-```
-
-## Workflow: Export and Import to Terraform
-
-1. **Export resources:**
-   ```bash
-   pingcli-terraformer export --out ./terraform
-   ```
-
-2. **Review generated files:**
-   ```bash
-   cd terraform
-   ls -la
-   # module.tf - root module
-   # imports.tf - import blocks
-   # ping-export-module/ - resource definitions
-   ```
-
-3. **Customize variables in module.tf:**
-   ```hcl
-   module "ping-export" {
-     source = "./ping-export-module"
-     
-     pingone_environment_id = "your-env-id"
-     davinci_variable_companyName_value = "Acme Corp"
-   }
-   ```
-
-4. **Initialize and import:**
-   ```bash
-   terraform init
-   terraform plan  # Review planned imports
-   terraform apply # Imports all resources automatically
-   ```
-
-5. **Manage with Terraform:**
-   ```bash
-   # Now you can manage resources with Terraform
-   terraform plan
-   terraform apply
-   ```
-
-## Examples
-
-See [examples/02-full-environment-export.sh](examples/02-full-environment-export.sh) for a complete demonstration.
-
-## PingCLI Plugin Mode
-
-When used with PingCLI, commands are namespaced under `tf`:
-
-```bash
-# Export environment
-pingcli tf export \
-  --pingone-worker-environment-id "abc-123..." \
-  --pingone-export-environment-id "def-456..." \
-  --out environment.tf
-```
-
-## Troubleshooting
-
-### Authentication Errors
-
-Ensure your worker app has the following scopes:
-- `p1:read:env`
-- `p1:read:davinci`
-
-### Missing Resources
+### Supported Resources
 
 The tool exports:
-- DaVinci flows
+- DaVinci flows (including enable and deploy)
 - DaVinci variables
 - DaVinci connector instances
 - DaVinci applications
 - DaVinci flow policies
 
-Other PingOne resources (users, groups, etc.) are not included.
+Other PingOne resources are not yet included.
 
 ### Import Failures
 
@@ -306,41 +150,6 @@ Import blocks require Terraform 1.5+. For older versions, use `--skip-imports` a
 ```bash
 terraform import module.ping-export.pingone_davinci_variable.var1 "env-id/var-id"
 ```
-
-## Development
-
-### Building
-
-```bash
-make build
-```
-
-### Testing
-
-```bash
-# Unit tests
-make test
-
-# Linting
-make golangcilint
-
-# Acceptance tests (requires PingOne environment)
-make testacc
-```
-
-## Known Limitations
-
-- Module variable generation is experimental - variables may show hardcoded values in some cases
-- Flow JSON is exported as-is from the API; complex flows may need manual adjustment
-- Connector secret properties are masked and must be manually populated
-
-See [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) for details (if available).
-
-## Version
-
-Current version: `v0.1.0-beta.1`
-
-Run `pingcli-terraformer --version` to check your installed version.
 
 ## References
 

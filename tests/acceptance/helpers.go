@@ -17,7 +17,7 @@ import (
 // Supports separate auth and target environments
 func createTestClient(t *testing.T) *api.Client {
 	clientID := requireEnv(t, "PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID")
-	clientSecret := requireEnv(t, "PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET")
+	clientSecret := requireEnv(t, "PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET")
 	authEnvID := requireEnv(t, "PINGCLI_PINGONE_ENVIRONMENT_ID")
 	targetEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", authEnvID) // Default to auth env
 	region := getEnvOrDefault("PINGONE_REGION", "NA")

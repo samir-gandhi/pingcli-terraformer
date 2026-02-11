@@ -100,13 +100,13 @@ func TestTfCommand_Routing(t *testing.T) {
 			if tt.name == "export subcommand with missing required flags" {
 				oldWorkerEnvID := os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID")
 				oldClientID := os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID")
-				oldClientSecret := os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET")
+				oldClientSecret := os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET")
 				oldRegionCode := os.Getenv("PINGCLI_PINGONE_REGION_CODE")
 				oldExportEnvID := os.Getenv("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID")
 
 				os.Unsetenv("PINGCLI_PINGONE_ENVIRONMENT_ID")
 				os.Unsetenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID")
-				os.Unsetenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET")
+				os.Unsetenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET")
 				os.Unsetenv("PINGCLI_PINGONE_REGION_CODE")
 				os.Unsetenv("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID")
 
@@ -118,7 +118,7 @@ func TestTfCommand_Routing(t *testing.T) {
 						os.Setenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID", oldClientID)
 					}
 					if oldClientSecret != "" {
-						os.Setenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET", oldClientSecret)
+						os.Setenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET", oldClientSecret)
 					}
 					if oldRegionCode != "" {
 						os.Setenv("PINGCLI_PINGONE_REGION_CODE", oldRegionCode)

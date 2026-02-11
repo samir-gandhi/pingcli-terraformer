@@ -51,7 +51,7 @@ var (
   # Use environment variables for credentials
   export PINGCLI_PINGONE_ENVIRONMENT_ID="..."
   export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID="..."
-  export PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET="..."
+  export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET="..."
   export PINGCLI_PINGONE_REGION_CODE="NA"
   pingcli tf export --services pingone-davinci --out ./environment.tf`
 
@@ -73,7 +73,7 @@ The generated HCL includes proper Terraform resource references and dependency o
 Authentication for PingOne services can be provided via flags or environment variables:
   PINGCLI_PINGONE_ENVIRONMENT_ID                    - Environment containing the worker app
   PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID      - Worker app client ID
-  PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET         - Worker app client secret
+  PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET   - Worker app client secret
   PINGCLI_PINGONE_REGION_CODE                       - Region code (AP, AU, CA, EU, NA)
   PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID  - Target environment to export (optional, defaults to worker environment)`
 
@@ -175,7 +175,7 @@ func (c *ExportCommand) runExport(logger grpc.Logger, services []string, workerE
 		clientID = os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID")
 	}
 	if clientSecret == "" {
-		clientSecret = os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET")
+		clientSecret = os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET")
 	}
 
 	// Validate required credentials
@@ -186,7 +186,7 @@ func (c *ExportCommand) runExport(logger grpc.Logger, services []string, workerE
 		return fmt.Errorf("client ID is required: use --pingone-worker-client-id flag or PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID env var")
 	}
 	if clientSecret == "" {
-		return fmt.Errorf("client secret is required: use --pingone-worker-client-secret flag or PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET env var")
+		return fmt.Errorf("client secret is required: use --pingone-worker-client-secret flag or PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_SECRET env var")
 	}
 
 	// Default region to NA if not specified
