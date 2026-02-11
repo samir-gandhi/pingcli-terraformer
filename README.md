@@ -13,6 +13,101 @@ Export PingOne DaVinci resources to Terraform HCL with automatic dependency reso
 
 ## Installation
 
+### Pre-built Binaries (Recommended)
+
+Download the latest release for your platform from [GitHub Releases](https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases):
+
+```bash
+# macOS (ARM64/M1)
+curl -L https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_darwin_arm64 -o pingcli-terraformer
+chmod +x pingcli-terraformer
+sudo mv pingcli-terraformer /usr/local/bin/
+
+# macOS (AMD64/Intel)
+curl -L https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_darwin_amd64 -o pingcli-terraformer
+chmod +x pingcli-terraformer
+sudo mv pingcli-terraformer /usr/local/bin/
+
+# Linux (AMD64)
+curl -L https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_linux_amd64 -o pingcli-terraformer
+chmod +x pingcli-terraformer
+sudo mv pingcli-terraformer /usr/local/bin/
+
+# Windows (AMD64) - PowerShell
+Invoke-WebRequest -Uri "https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_windows_amd64.exe" -OutFile "pingcli-terraformer.exe"
+# Move to a directory in your PATH
+```
+
+### Homebrew (macOS/Linux)
+
+```bash
+brew tap samir-gandhi/tap
+brew install pingcli-terraformer
+```
+
+### Linux Package Managers
+
+**Debian/Ubuntu (.deb)**:
+```bash
+# Download the .deb package from releases
+curl -LO https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_0.1.0_linux_amd64.deb
+sudo dpkg -i pingcli-terraformer_0.1.0_linux_amd64.deb
+```
+
+**RedHat/Fedora (.rpm)**:
+```bash
+# Download the .rpm package from releases
+curl -LO https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_0.1.0_linux_amd64.rpm
+sudo rpm -i pingcli-terraformer_0.1.0_linux_amd64.rpm
+```
+
+**Alpine (.apk)**:
+```bash
+# Download the .apk package from releases
+curl -LO https://github.com/samir-gandhi/pingcli-plugin-terraformer/releases/latest/download/pingcli-terraformer_0.1.0_linux_amd64.apk
+sudo apk add --allow-untrusted pingcli-terraformer_0.1.0_linux_amd64.apk
+```
+
+### Docker
+
+Build and run using Docker without installing locally:
+
+**Build the image**:
+```bash
+# For your local platform
+docker buildx build -t pingcli-terraformer:latest .
+
+# For specific platform (e.g., ARM64/M1 Mac)
+docker buildx build --platform linux/arm64 -t pingcli-terraformer:latest .
+
+# For specific platform (e.g., AMD64/Intel)
+docker buildx build --platform linux/amd64 -t pingcli-terraformer:latest .
+```
+
+**Run export with output to mounted folder**:
+```bash
+# Create output directory
+mkdir -p ./terraform-output
+
+# Run export with mounted volume
+docker run --rm \
+  -v "$(pwd)/terraform-output:/output" \
+  --env-file secrets.env \
+  pingcli-terraformer:latest \
+  export --out=/output
+```
+
+The generated Terraform files will be available in `./terraform-output/`.
+
+**Alternative: Run interactively**:
+```bash
+docker run -it --rm \
+  -v "$(pwd)/terraform-output:/output" \
+  --entrypoint sh \
+  --env-file secrets.env \
+  pingcli-terraformer:latest
+```
+
 ### From Source
 
 ```bash
@@ -159,7 +254,7 @@ terraform import module.ping-export.pingone_davinci_variable.var1 "env-id/var-id
 
 ## License
 
-[Add license information]
+Apache License 2.0 - see [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
