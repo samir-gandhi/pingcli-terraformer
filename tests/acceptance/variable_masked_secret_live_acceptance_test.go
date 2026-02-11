@@ -18,7 +18,7 @@ func TestAcceptance_LiveMaskedSecretVariable(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	envID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", getEnvOrDefault("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID", ""))
+	envID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", getEnvOrDefault("PINGCLI_PINGONE_ENVIRONMENT_ID", ""))
 	if envID == "" {
 		t.Skip("No export environment ID available")
 	}

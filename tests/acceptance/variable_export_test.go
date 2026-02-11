@@ -138,7 +138,7 @@ func TestExportVariablesComparison(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID"))
+	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID"))
 
 	// Get variables from API
 	variables, err := client.ListVariables(ctx, exportEnvID)

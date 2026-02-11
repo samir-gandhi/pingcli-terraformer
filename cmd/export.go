@@ -49,9 +49,9 @@ var (
     --skip-dependencies
 
   # Use environment variables for credentials
-  export PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID="..."
-  export PINGCLI_PINGONE_WORKER_CLIENT_ID="..."
-  export PINGCLI_PINGONE_WORKER_CLIENT_SECRET="..."
+  export PINGCLI_PINGONE_ENVIRONMENT_ID="..."
+  export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID="..."
+  export PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET="..."
   export PINGCLI_PINGONE_REGION_CODE="NA"
   pingcli tf export --services pingone-davinci --out ./environment.tf`
 
@@ -71,10 +71,10 @@ Future services (not yet implemented):
 The generated HCL includes proper Terraform resource references and dependency ordering.
 
 Authentication for PingOne services can be provided via flags or environment variables:
-  PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID  - Environment containing the worker app
-  PINGCLI_PINGONE_WORKER_CLIENT_ID       - Worker app client ID
-  PINGCLI_PINGONE_WORKER_CLIENT_SECRET   - Worker app client secret
-  PINGCLI_PINGONE_REGION_CODE            - Region code (AP, AU, CA, EU, NA)
+  PINGCLI_PINGONE_ENVIRONMENT_ID                    - Environment containing the worker app
+  PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID      - Worker app client ID
+  PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET         - Worker app client secret
+  PINGCLI_PINGONE_REGION_CODE                       - Region code (AP, AU, CA, EU, NA)
   PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID  - Target environment to export (optional, defaults to worker environment)`
 
 	// ExportShort provides a brief, one-line description of the command
@@ -159,7 +159,7 @@ func (c *ExportCommand) runExport(logger grpc.Logger, services []string, workerE
 
 	// Get credentials from environment variables if not provided via flags
 	if workerEnvironmentID == "" {
-		workerEnvironmentID = os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID")
+		workerEnvironmentID = os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID")
 	}
 	if exportEnvironmentID == "" {
 		exportEnvironmentID = os.Getenv("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID")
@@ -172,21 +172,21 @@ func (c *ExportCommand) runExport(logger grpc.Logger, services []string, workerE
 		regionCode = os.Getenv("PINGCLI_PINGONE_REGION_CODE")
 	}
 	if clientID == "" {
-		clientID = os.Getenv("PINGCLI_PINGONE_WORKER_CLIENT_ID")
+		clientID = os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID")
 	}
 	if clientSecret == "" {
-		clientSecret = os.Getenv("PINGCLI_PINGONE_WORKER_CLIENT_SECRET")
+		clientSecret = os.Getenv("PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET")
 	}
 
 	// Validate required credentials
 	if workerEnvironmentID == "" {
-		return fmt.Errorf("worker environment ID is required: use --pingone-worker-environment-id flag or PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID env var")
+		return fmt.Errorf("worker environment ID is required: use --pingone-worker-environment-id flag or PINGCLI_PINGONE_ENVIRONMENT_ID env var")
 	}
 	if clientID == "" {
-		return fmt.Errorf("client ID is required: use --pingone-worker-client-id flag or PINGCLI_PINGONE_WORKER_CLIENT_ID env var")
+		return fmt.Errorf("client ID is required: use --pingone-worker-client-id flag or PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID env var")
 	}
 	if clientSecret == "" {
-		return fmt.Errorf("client secret is required: use --pingone-worker-client-secret flag or PINGCLI_PINGONE_WORKER_CLIENT_SECRET env var")
+		return fmt.Errorf("client secret is required: use --pingone-worker-client-secret flag or PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET env var")
 	}
 
 	// Default region to NA if not specified

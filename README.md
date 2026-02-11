@@ -23,19 +23,10 @@ make install
 
 The binary will be installed as `pingcli-terraformer` in your `$GOBIN` directory.
 
-### As PingCLI Plugin
-
-When used with [PingCLI](https://github.com/pingidentity/pingcli), commands are available under `pingcli tf`:
-
-```bash
-pingcli tf export --help
-```
-
 ## Prerequisites
 
-- Go 1.25.1 or higher
 - PingOne environment with DaVinci
-- OAuth2 worker application with DaVinci API access
+- PingOne worker application with DaVinci API Read access (DaVinci Admin Read Only Role)
 - Terraform 1.5+ (for import blocks)
 
 ## Configuration
@@ -46,9 +37,9 @@ Set these environment variables to avoid passing credentials via command-line fl
 
 ```bash
 # Worker environment (for authentication)
-export PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID="abc-123-def-456..."
-export PINGCLI_PINGONE_WORKER_CLIENT_ID="your-client-id"
-export PINGCLI_PINGONE_WORKER_CLIENT_SECRET="your-client-secret"
+export PINGCLI_PINGONE_ENVIRONMENT_ID="abc-123-def-456..."
+export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID="your-client-id"
+export PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET="your-client-secret"
 
 # Export environment (target resources, defaults to worker environment if not set)
 export PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID="target-env-id"
@@ -79,7 +70,7 @@ Export all DaVinci resources from an environment:
 
 ```bash
 # Using environment variables
-pingcli-terraformer export --out environment.tf
+pingcli-terraformer export
 
 # Using command-line flags
 pingcli-terraformer export \
@@ -87,8 +78,7 @@ pingcli-terraformer export \
   --pingone-export-environment-id "def-456..." \
   --pingone-worker-client-id "client-id" \
   --pingone-worker-client-secret "client-secret" \
-  --pingone-region-code "NA" \
-  --out environment.tf
+  --pingone-region-code "NA"
 ```
 
 ### Module Generation (Default)
@@ -96,28 +86,24 @@ pingcli-terraformer export \
 By default, exports generate a Terraform module structure:
 
 ```bash
-pingcli-terraformer export --out ./terraform
+pingcli-terraformer export
 
 # Generates:
-# terraform/
-#   ├── ping-export-module/    (child module)
-#   │   ├── versions.tf
-#   │   ├── variables.tf
-#   │   ├── outputs.tf
-#   │   ├── flows.tf
-#   │   ├── connections.tf
-#   │   └── variables_dv.tf
-#   ├── module.tf              (root module wrapper)
-#   └── imports.tf             (import blocks)
-```
+# .
+# ├── ping-export-module
+# │   ├── outputs.tf
+# │   ├── pingone_davinci_application_flow_policy.tf
+# │   ├── pingone_davinci_application.tf
+# │   ├── pingone_davinci_connector_instance.tf
+# │   ├── pingone_davinci_flow.tf
+# │   ├── pingone_davinci_variable.tf
+# │   ├── variables.tf
+# │   └── versions.tf
+# ├── ping-export-module.tf
+# ├── ping-export-terraform.auto.tfvars
+# └── ping-export-variables.tf
 
-### Customize Module Name
-
-```bash
-pingcli-terraformer export \
-  --module-name "my-davinci" \
-  --module-dir "davinci-resources" \
-  --out ./terraform
+# 2 directories, 11 files
 ```
 
 ### Include Actual Values

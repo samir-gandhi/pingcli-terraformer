@@ -10,11 +10,11 @@ Acceptance tests validate the tool against the real PingOne DaVinci API.
 
    ```bash
    # OAuth client credentials (worker app)
-   export PINGCLI_PINGONE_WORKER_CLIENT_ID="your-client-id"
-   export PINGCLI_PINGONE_WORKER_CLIENT_SECRET="your-client-secret"
+   export PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID="your-client-id"
+   export PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET="your-client-secret"
    
    # Worker Environment: Environment where the OAuth client exists
-   export PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID="worker-env-id"
+   export PINGCLI_PINGONE_ENVIRONMENT_ID="worker-env-id"
    
    # Export Environment: Environment containing DaVinci resources to export
    # Optional - defaults to worker environment if not specified
@@ -72,9 +72,9 @@ jobs:
       - uses: actions/setup-go@v4
       - name: Run acceptance tests
         env:
-          PINGCLI_PINGONE_WORKER_CLIENT_ID: ${{ secrets.ACCEPTANCE_CLIENT_ID }}
-          PINGCLI_PINGONE_WORKER_CLIENT_SECRET: ${{ secrets.ACCEPTANCE_CLIENT_SECRET }}
-          PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID: ${{ secrets.ACCEPTANCE_WORKER_ENV_ID }}
+          PINGCLI_PINGONE_CLIENT_CREDENTIALS_CLIENT_ID: ${{ secrets.ACCEPTANCE_CLIENT_ID }}
+          PINGCLI_PINGONE_CLIENT_CREDENTIALS_SECRET: ${{ secrets.ACCEPTANCE_CLIENT_SECRET }}
+          PINGCLI_PINGONE_ENVIRONMENT_ID: ${{ secrets.ACCEPTANCE_WORKER_ENV_ID }}
           PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID: ${{ secrets.ACCEPTANCE_EXPORT_ENV_ID }}
           PINGONE_REGION: NA
         run: go test -tags=acceptance ./tests/acceptance -v
@@ -98,7 +98,7 @@ jobs:
 ### Authentication Failures
 
 - Verify client credentials are correct
-- Ensure OAuth client exists in PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID
+- Ensure OAuth client exists in PINGCLI_PINGONE_ENVIRONMENT_ID
 - Ensure OAuth client has DaVinci Admin role in PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID
 - Check region matches environment location
 - Verify OAuth client has cross-environment permissions if worker and export environments differ

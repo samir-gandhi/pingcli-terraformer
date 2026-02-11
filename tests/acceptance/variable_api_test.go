@@ -17,7 +17,7 @@ func TestVariableAPI(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID"))
+	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID"))
 
 	t.Run("ListVariables", func(t *testing.T) {
 		variables, err := client.ListVariables(ctx, exportEnvID)
@@ -42,7 +42,7 @@ func TestGetVariableById(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID"))
+	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID"))
 
 	// First get list of variables
 	variables, err := client.ListVariables(ctx, exportEnvID)
@@ -78,7 +78,7 @@ func TestListVariablesEmpty(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	workerEnvID := os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID")
+	workerEnvID := os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID")
 
 	// Use worker environment which should have no variables
 	variables, err := client.ListVariables(ctx, workerEnvID)

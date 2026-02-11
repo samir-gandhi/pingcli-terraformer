@@ -17,7 +17,7 @@ func TestApplicationAPI(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID"))
+	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID"))
 
 	t.Run("ListApplications", func(t *testing.T) {
 		applications, err := client.ListApplications(ctx, exportEnvID)
@@ -40,7 +40,7 @@ func TestGetApplicationById(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID"))
+	exportEnvID := getEnvOrDefault("PINGCLI_PINGONE_EXPORT_ENVIRONMENT_ID", os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID"))
 
 	// First get list of applications
 	applications, err := client.ListApplications(ctx, exportEnvID)
@@ -82,7 +82,7 @@ func TestListApplicationsEmpty(t *testing.T) {
 	client := createTestClient(t)
 	ctx := context.Background()
 
-	workerEnvID := os.Getenv("PINGCLI_PINGONE_WORKER_ENVIRONMENT_ID")
+	workerEnvID := os.Getenv("PINGCLI_PINGONE_ENVIRONMENT_ID")
 
 	// Use worker environment which should have no applications
 	applications, err := client.ListApplications(ctx, workerEnvID)
