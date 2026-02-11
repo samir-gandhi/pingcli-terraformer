@@ -36,6 +36,7 @@ Thumbs.db
 *.hcl
 *.tf
 output/
+dist/
 
 # Test fixtures (except sample files)
 *.json
