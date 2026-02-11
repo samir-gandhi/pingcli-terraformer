@@ -1,4 +1,4 @@
-# PingCLI Terraformer Plugin
+# Ping CLI Terraformer Plugin
 
 Export PingOne DaVinci resources to Terraform HCL with automatic dependency resolution and import block generation.
 
@@ -8,7 +8,7 @@ Export PingOne DaVinci resources to Terraform HCL with automatic dependency reso
 - **Automatic Dependency Resolution**: Generates proper Terraform references between resources
 - **Import Block Generation**: Automatic Terraform import blocks for existing resources (Terraform 1.5+)
 - **Module Structure**: Generates reusable Terraform modules with proper variable scaffolding
-- **Dual Mode Operation**: Works as standalone CLI or PingCLI plugin
+- **Dual Mode Operation**: Works as standalone CLI or Ping CLI plugin
 - **Two-Environment Authentication**: Isolate credentials from exported resources
 
 ## Installation
@@ -248,7 +248,7 @@ terraform import module.ping-export.pingone_davinci_variable.var1 "env-id/var-id
 
 ## References
 
-- [PingCLI](https://github.com/pingidentity/pingcli)
+- [Ping CLI](https://github.com/pingidentity/pingcli)
 - [PingOne Terraform Provider](https://github.com/pingidentity/terraform-provider-pingone)
 - [PingOne DaVinci Documentation](https://docs.pingidentity.com/r/en-us/davinci/davinci_landing)
 

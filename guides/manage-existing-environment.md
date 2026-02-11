@@ -329,7 +329,7 @@ git commit -m "Initial Terraform configuration for DaVinci environment"
 
 ## Additional Resources
 
-- [PingCLI Terraformer Repository](https://github.com/samir-gandhi/pingcli-plugin-terraformer)
+- [Ping CLI Terraformer Repository](https://github.com/samir-gandhi/pingcli-plugin-terraformer)
 - [Terraform Import Documentation](https://www.terraform.io/docs/cli/import/index.html)
 - [PingOne DaVinci Documentation](https://docs.pingidentity.com/davinci)
 
