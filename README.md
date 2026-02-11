@@ -11,6 +11,13 @@ Export PingOne DaVinci resources to Terraform HCL with automatic dependency reso
 - **Dual Mode Operation**: Works as standalone CLI or Ping CLI plugin
 - **Two-Environment Authentication**: Isolate credentials from exported resources
 
+## Guides
+
+For a detailed walk through of achieving a specific use case see:
+
+- [Manage an Existing Environment](./guides/manage-existing-environment.md) - Bring an unmanaged DaVinci Environment under Terraform control.
+- [Migrate from Legacy DaVinci Provider](./guides/migrate-from-legacy-provider.md) - Transfer control of terraform resources from the `pingidentity/davinci` provider to `pingidentity/pingone`.
+
 ## Installation
 
 ### Pre-built Binaries (Recommended)

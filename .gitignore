@@ -27,6 +27,7 @@ go.work
 *.swp
 *.swo
 *~
+AGENTS.md
 
 # OS specific files
 .DS_Store
