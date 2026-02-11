@@ -111,7 +111,7 @@ func runAsPlugin() {
 func runAsStandalone() {
 	// Check for version flag before subcommand parsing
 	if len(os.Args) > 1 && (os.Args[1] == "--version" || os.Args[1] == "-v") {
-		fmt.Printf("davinci-convert version %s (commit: %s)\n", version, commit)
+		fmt.Printf("pingcli-terraformer version %s (commit: %s)\n", version, commit)
 		os.Exit(0)
 	}
 
@@ -124,8 +124,8 @@ func runAsStandalone() {
 	// Require subcommand
 	if len(os.Args) < 2 {
 		fmt.Fprintln(os.Stderr, "Error: subcommand required")
-		fmt.Fprintln(os.Stderr, "Usage: davinci-convert [davinci-to-hcl|export] [flags]")
-		fmt.Fprintln(os.Stderr, "Run 'davinci-convert --help' for usage information")
+		fmt.Fprintln(os.Stderr, "Usage: pingcli-terraformer export [flags]")
+		fmt.Fprintln(os.Stderr, "Run 'pingcli-terraformer --help' for usage information")
 		os.Exit(1)
 	}
 
@@ -149,24 +149,16 @@ func printStandaloneHelp() {
 Terraform utilities for Ping Identity resources.
 
 Usage:
-  davinci-convert [subcommand] [flags]
+  pingcli-terraformer [subcommand] [flags]
 
 Available subcommands:
-  davinci-to-hcl - Convert a DaVinci flow JSON file to HCL
   export         - Export Ping Identity resources to HCL
   help           - Show this help message
-  version        - Show version information
 
 Examples:
-  # Convert a DaVinci flow JSON file to Terraform HCL
-  davinci-convert davinci-to-hcl --flow-json ./my-flow.json --out ./output.tf
 
   # Export PingOne DaVinci resources to Terraform HCL
-  davinci-convert export --services pingone-davinci --environment-id <uuid> --out ./environment.tf
-
-  # Get help for a specific subcommand
-  davinci-convert davinci-to-hcl --help
-  davinci-convert export --help
+  pingcli-terraformer export --services pingone-davinci --environment-id "<uuid>"
 
 Global Flags:
   -h, --help      Show help message

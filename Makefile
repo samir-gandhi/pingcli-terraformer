@@ -1,7 +1,9 @@
 TEST?=$$(go list ./...)
-PKG_NAME=pingcli-plugin-terraformer
+PKG_NAME=pingcli-terraformer
 BINARY=pingcli-terraformer
 VERSION=0.1.0
+
+GOBIN?=$$(go env GOPATH)/bin
 
 default: install
 
@@ -12,7 +14,8 @@ build:
 
 install: build
 	@echo "==> Installing..."
-	go install -ldflags="-X main.version=$(VERSION)"
+	@cp $(BINARY) $(GOBIN)/$(BINARY)
+	@echo "Installed $(BINARY) to $(GOBIN)/$(BINARY)"
 
 test: build
 	@echo "==> Running unit tests..."
