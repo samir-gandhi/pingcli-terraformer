@@ -1,0 +1,3 @@
+```release-note:internal
+Updating changelog and release notes process to match Ping PDS shared team standards
+```
